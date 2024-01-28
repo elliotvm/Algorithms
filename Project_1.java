@@ -14,6 +14,13 @@ public class Project_1 {
         System.out.println(Arrays.toString(A));
         
         startTime = System.nanoTime();
+        int[] D = InsertionSort(A);
+        estimatedTime = System.nanoTime() - startTime;
+        
+        System.out.println(Arrays.toString(D));
+        System.out.println("Estimated time: " + estimatedTime);
+        
+        startTime = System.nanoTime();
         int[] B = QuickSortDoublePointer(A, 0, size-1);
         estimatedTime = System.nanoTime() - startTime;
         
@@ -35,6 +42,25 @@ public class Project_1 {
         
         for(int i=0; i < size; i++){
             A[i] = rand.nextInt(size);
+        }
+        
+        return A;
+    }
+    
+    public static int[] InsertionSort(int[] A){
+        
+        int key;
+        int j;
+        
+        for(int i=1; i < A.length; i++){
+            key = A[i];
+            j = i-1;
+            
+            while(j >= 0 && A[j] > key){
+                A[j+1] = A[j];
+                j = j-1;
+            }
+            A[j+1] = key;
         }
         
         return A;
