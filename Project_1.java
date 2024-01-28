@@ -1,5 +1,3 @@
-package com.mycompany.project_1;
-
 import java.util.Arrays;
 import java.util.Random;
 import java.io.FileWriter;
@@ -9,20 +7,21 @@ import java.io.IOException;
 public class Project_1 {
 
     public static void main(String[] args) {
-        int size = 20;
+        int size;
 //        int[] sizes = new int[] {10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 
 //            10000, 20000, 50000, 100000, 200000, 500000, 1000000};
         int[] sizes = new int[]{10, 20, 50, 100, 200, 500, 1000, 2000, 5000,
-            10000};
+            10000, 12500, 15000, 17500, 20000, 25000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000};
         
         try {
-            FileWriter writer = new FileWriter("C:\\Users\\kelee\\Documents\\Project1.csv");
+            FileWriter writer = new FileWriter("C:\\Users\\ellio\\Desktop\\Project1.csv");
             
             long startTime;
             long estimatedTime;
 
             for (int j = 0; j < sizes.length; j++) {
                 size = sizes[j];
+                System.out.println(size);
                 writer.append(String.valueOf(size));
                 writer.append(",");
                 
@@ -44,6 +43,8 @@ public class Project_1 {
                     G[i] = size - i;
                 }
                 
+                //InsertSort Random
+                
                 startTime = System.nanoTime();
                 InsertionSort(A);
                 estimatedTime = System.nanoTime() - startTime;
@@ -51,6 +52,9 @@ public class Project_1 {
                 writer.append(",");
 
                 System.out.println("Estimated time: " + estimatedTime);
+                
+                
+                //InsertSort Forward Sorted
                 
                 startTime = System.nanoTime();
                 InsertionSort(D);
@@ -60,14 +64,18 @@ public class Project_1 {
 
                 System.out.println("Estimated time: " + estimatedTime);
                 
+                //InsertSort Rerverse Sorted
+                
                 startTime = System.nanoTime();
                 InsertionSort(E);
                 estimatedTime = System.nanoTime() - startTime;
                 writer.append(String.valueOf(estimatedTime));
                 writer.append(",");
-
+                
                 System.out.println("Estimated time: " + estimatedTime);
-
+                
+                //QuickSort1 Random
+                
                 startTime = System.nanoTime();
                 QuickSortSinglePointer(B, 0, size - 1);
                 estimatedTime = System.nanoTime() - startTime;
@@ -75,7 +83,10 @@ public class Project_1 {
                 writer.append(",");
 
                 System.out.println("Estimated time: " + estimatedTime);
-
+                
+                
+                //QuickSort1 Forward
+                
                 startTime = System.nanoTime();
                 QuickSortSinglePointer(D, 0, size - 1);
                 estimatedTime = System.nanoTime() - startTime;
@@ -84,13 +95,17 @@ public class Project_1 {
 
                 System.out.println("Estimated time: " + estimatedTime);
 
+                //QuickSort1 Reverse
+                
                 startTime = System.nanoTime();
                 QuickSortSinglePointer(F, 0, size - 1);
                 estimatedTime = System.nanoTime() - startTime;
                 writer.append(String.valueOf(estimatedTime));
                 writer.append(",");
-
+                
                 System.out.println("Estimated time: " + estimatedTime);
+                
+                //QuickSort2 Random
                 
                 startTime = System.nanoTime();
                 QuickSortDoublePointer(C, 0, size - 1);
@@ -100,6 +115,8 @@ public class Project_1 {
 
                 System.out.println("Estimated time: " + estimatedTime);
                 
+                //QuickSort2 Forward
+                
                 startTime = System.nanoTime();
                 QuickSortDoublePointer(D, 0, size - 1);
                 estimatedTime = System.nanoTime() - startTime;
@@ -107,6 +124,8 @@ public class Project_1 {
                 writer.append(",");
 
                 System.out.println("Estimated time: " + estimatedTime);
+                
+                //QuickSort2 Backwards
                 
                 startTime = System.nanoTime();
                 QuickSortDoublePointer(G, 0, size - 1);
@@ -164,7 +183,12 @@ public class Project_1 {
     }
 
     public static int DoublePointerPartition(int[] A, int first, int last) {
-        int pivot = A[last];
+        //last
+        //int pivot = A[last];
+        //median
+        //int pivot = A[last/2];
+        //median3
+        int pivot = (A[first] + A[last] + A[last/2]) / 3;
         int lower = first;
         int upper = last - 1;
 
@@ -186,7 +210,12 @@ public class Project_1 {
     }
 
     public static int SinglePointerPartition(int[] A, int first, int last) {
-        int pivot = A[last];
+        //last
+        //int pivot = A[last];
+        //median
+        //int pivot = A[last/2];
+        //median3
+        int pivot = (A[first] + A[last] + A[last/2]) / 3;
         int lowPointer = first - 1;
 
         for (int pointer = first; pointer <= last - 1; pointer++) {
