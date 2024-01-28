@@ -1,4 +1,3 @@
-
 import java.util.Arrays;
 import java.util.Random;
 
@@ -9,13 +8,24 @@ public class Project_1 {
         int size = 20;
         int[] A = RandomArray(size);
         
+        long startTime;
+        long estimatedTime;
+        
         System.out.println(Arrays.toString(A));
         
+        startTime = System.nanoTime();
         int[] B = QuickSortDoublePointer(A, 0, size-1);
-        int[] C = QuickSortSinglePointer(A, 0, size-1);
+        estimatedTime = System.nanoTime() - startTime;
         
         System.out.println(Arrays.toString(B));
+        System.out.println("Estimated time: " + estimatedTime);
+        
+        startTime = System.nanoTime();
+        int[] C = QuickSortSinglePointer(A, 0, size-1);
+        estimatedTime = System.nanoTime() - startTime;
+        
         System.out.println(Arrays.toString(C));
+        System.out.println("Estimated time: " + estimatedTime);
     }
     
     public static int[] RandomArray(int size){
