@@ -1,17 +1,33 @@
 
 import java.util.Arrays;
-
+import java.util.Random;
 
 
 public class Project_1 {
 
     public static void main(String[] args) {
-        int[] A = {1, 4, 3, 6, 8, 2, 5, 9, 7};
-        int[] B = QuickSortDoublePointer(A, 0, 8);
-        int[] C = QuickSortSinglePointer(A, 0, 8);
+        int size = 20;
+        int[] A = RandomArray(size);
+        
+        System.out.println(Arrays.toString(A));
+        
+        int[] B = QuickSortDoublePointer(A, 0, size-1);
+        int[] C = QuickSortSinglePointer(A, 0, size-1);
         
         System.out.println(Arrays.toString(B));
         System.out.println(Arrays.toString(C));
+    }
+    
+    public static int[] RandomArray(int size){
+        
+        Random rand = new Random();
+        int[] A = new int[size];
+        
+        for(int i=0; i < size; i++){
+            A[i] = rand.nextInt(size);
+        }
+        
+        return A;
     }
     
     public static void swap(int[] A, int lower, int upper){
