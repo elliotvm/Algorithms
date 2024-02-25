@@ -1,7 +1,37 @@
 import java.util.*;
 
 public class Project_2 {
-     
+    
+    public static void printResult(int[] denomination, int[] targets, int[] prev){
+        for(int i = 0; i < targets.length; i++){
+            int counts[] = new int[denomination.length];
+            
+            //get pointer to target
+            int p = targets[i];
+            
+            System.out.print(targets[i] + " cents = ");
+            
+            while(prev[p] != -1){
+                int c = prev[p];
+                
+                for(int j = 0; j < denomination.length; j++){
+                    if(denomination[j] == c){
+                        counts[j]++;
+                    }
+                }
+                
+                p = p - c;
+            }   
+            
+            for(int k = 0; k < denomination.length; k++){
+                if(counts[k] != 0){
+                    System.out.print(denomination[k] + ":" + counts[k] + " ");
+                }
+            }
+            System.out.print("\n");
+        }
+    }
+    
     public static void bottomUp(int[] denomination, int[] targets){
         
         int size = 0;
@@ -26,7 +56,7 @@ public class Project_2 {
             
             //fill original value with +1 cent (we assume this will always be in denomination);
             table[i] = table[i - 1] + 1;
-            prev[i] = i - 1;
+            prev[i] = 1;
             
             for(int j = 0; j < denomination.length; j++){
                 
@@ -36,7 +66,8 @@ public class Project_2 {
                     
                     if(table[i - c] + 1 < table[i]){
                         table[i] = table[i - c] + 1;
-                        prev[i] = i - c;
+                        //prev[i] = i - c;
+                        prev[i] = c;
                     }
                     
                 }
@@ -44,33 +75,11 @@ public class Project_2 {
             }
         }
         
-        //System.out.println(Arrays.toString(table));
-        //System.out.println(Arrays.toString(prev));
-        /*TODO: Print results
-        //keeps track of how many counts of each currency
-        int counts[] = new int[denomination.length];
-        
-        //get and print results
-        for(int i = 0; i < targets.length; i++){
-            
-            //get pointer to target
-            int p = targets[i];
-            
-            System.out.print(targets[i] + " cents = ");
-            
-            while(p != -1){
-                
-            }
-            
-            
-        }
-        */
+        printResult(denomination, targets, prev);
+
     }
     
     public static void main(String[] args) {
-        
-        //int denomination[] = {1, 7, 17, 23, 37, 37};
-        //int target = 21;
         
         //parse input
         Scanner in = new Scanner(System.in);
