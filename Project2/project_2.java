@@ -114,6 +114,26 @@ public class Project_2 {
         }
     }
     
+    public static void memoRecursive( int[] denomination, int[] targets) {
+        
+        int size = 0;
+        //find biggest target and use that to find and fill table
+        for(int i = 0; i < targets.length; i++){
+            if(targets[i] > size){
+                size = targets[i];
+            }
+        }
+        
+        Node table[] = new Node[targets.length];
+        Node allNodes[] = new Node[size + 1];
+        
+        for (int i = 0; i < targets.length; i++) {
+            Node prev = memoRecursiveCall(denomination, targets[i], allNodes);
+            table[i] = new Node(prev.numCoins + 1, targets[i], prev);
+            printResultRecursive(denomination, table[i]);
+        }
+    }
+    
     public static Node pureRecursiveCall( int[] denomination, int target) {
         Node bestNode = new Node(10000, 0, null);
         for (int j = denomination.length - 1; j >= 0; j--) {
@@ -136,8 +156,38 @@ public class Project_2 {
         return bestNode;
     }
     
+    public static Node memoRecursiveCall( int[] denomination, int target, Node[] allNodes) {
+        Node bestNode = new Node(10000, 0, null);
+        for (int j = denomination.length - 1; j >= 0; j--) {
+            
+            if (target - denomination[j] == 0) {
+                bestNode = new Node(0, 0, null);
+            }
+            else if (target - denomination[j] < 0) {
+            }
+            else {
+                Node currNode;
+                if (allNodes[target - denomination[j]] != null) {
+                    currNode = new Node(allNodes[target - denomination[j]]);
+                }
+                else {
+                    currNode = memoRecursiveCall(denomination, target - denomination[j], allNodes);
+                    currNode.prevNode = new Node(currNode);
+                    currNode.numCoins++;
+                    currNode.value = target - denomination[j];
+                }
+                
+                if (currNode.numCoins < bestNode.numCoins) {
+                    bestNode = currNode;
+                }
+            }
+        }
+        allNodes[bestNode.value] = new Node(bestNode);
+        return bestNode;
+    }
+    
     public static void main(String[] args) {
-
+        
         //parse input
         Scanner in = new Scanner(System.in);
 
@@ -155,7 +205,8 @@ public class Project_2 {
             targets[i] = in.nextInt();
         }
 
-        pureRecursive(denomination, targets);
         bottomUp(denomination, targets);
+        memoRecursive(denomination, targets);
+        pureRecursive(denomination, targets);
     }
 }
