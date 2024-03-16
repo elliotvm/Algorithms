@@ -42,6 +42,44 @@ public class Project_3 {
     void connectedComponents(Dominion u, Dominion v){
         
     }
+
+    Dominion returnNeighbor(Dominion galaxy[], int n, int m, int k, int loc, int dir) {
+        switch (dir) {
+            case 0: // Right (n+)
+                if ((loc % k) % m < n - 1) {
+                    return galaxy[loc + 1];
+                }
+                else return null;
+            case 1: // Left (n-)
+                if ((loc % k) % m > 0) {
+                    return galaxy[loc - 1];
+                }
+                else return null;
+            case 2: // Out (m+)
+                if ((loc % k) % n < m - 1) {
+                    return galaxy[loc + n];
+                }
+                else return null;
+            case 3: // In (m-)
+                if ((loc % k) % n > 0) {
+                    return galaxy[loc - n];
+                }
+                else return null;
+            case 4: // Up (k+)
+                if ((loc % m) % n < k - 1) {
+                    return galaxy[loc + (m * n)];
+                } else {
+                    return null;
+                }
+            case 5: // Down (k-)
+                if ((loc % m) % n > 0) {
+                    return galaxy[loc - (m * n)];
+                } else
+                    return null;
+            default:
+                return null;
+        }
+    }
     
     public static void main(String[] args) {
         
