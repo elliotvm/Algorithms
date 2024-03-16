@@ -24,11 +24,11 @@ public class Project_3 {
         Dominion repY = findSet(y);
         
         if(repX.rank >= repY.rank){
-            empire.remove(y);
+            empire.remove(repY);
             repY.parent = repX;
             repX.rank += 1;
         }else{
-            empire.remove(x);
+            empire.remove(repX);
             repX.parent = repY;
             repY.rank += 1;
         }
@@ -105,7 +105,7 @@ public class Project_3 {
         Stack<Dominion> allDominions = new Stack<>();
         
         //keep track of inputted sized of monarchy
-        Stack<Integer> MonarchySize = new Stack<Integer>();
+        Stack<Integer> MonarchySize = new Stack<>();
         
         for (int a = 0; a < l; a++) {
             int p = in.nextInt();
@@ -125,6 +125,7 @@ public class Project_3 {
             for(int i = 0; i < p; i++){
                 Dominion d = allDominions.pop();
                 makeSet(d, empire);
+                galaxy[d.location] = d;
                 
                 //check if a dominion of a different set is in there, if yes, union...
                 for(int direction = 0; direction < 6; direction++){
