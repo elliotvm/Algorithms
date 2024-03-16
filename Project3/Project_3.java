@@ -52,8 +52,8 @@ public class Project_3 {
         int k = in.nextInt();
         int l = in.nextInt();
         
-        Dominion galaxy[] = new Dominion()[n*m*k];
-        List monarchies = new List();
+        Dominion galaxy[] = new Dominion[n*m*k];
+        List<Dominion> monarchies;
         Stack allDominions = new Stack();
         
         for (int a = 0; a < l; a++) {
