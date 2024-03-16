@@ -42,35 +42,35 @@ public class Project_3 {
         switch (dir) {
             case 0 -> {
                 // Right (n+)
-                if ((loc % k) % m < n - 1) {
+                if (loc % n < n - 1) {
                     return galaxy[loc + 1];
                 }
                 else return null;
             }
             case 1 -> {
                 // Left (n-)
-                if ((loc % k) % m > 0) {
+                if (loc % n > 0) {
                     return galaxy[loc - 1];
                 }
                 else return null;
             }
             case 2 -> {
                 // Out (m+)
-                if ((loc % k) % n < m - 1) {
+                if ((loc % (n * m)) < (n * (m - 1))) {
                     return galaxy[loc + n];
                 }
                 else return null;
             }
             case 3 -> {
                 // In (m-)
-                if ((loc % k) % n > 0) {
+                if ((loc % (n * m)) > m) {
                     return galaxy[loc - n];
                 }
                 else return null;
             }
             case 4 -> {
                 // Up (k+)
-                if ((loc % m) % n < k - 1) {
+                if (loc < (n * m * (k - 1))) {
                     return galaxy[loc + (m * n)];
                 } else {
                     return null;
@@ -78,7 +78,7 @@ public class Project_3 {
             }
             case 5 -> {
                 // Down (k-)
-                if ((loc % m) % n > 0) {
+                if (loc > (m * n)) {
                     return galaxy[loc - (m * n)];
                 } else
                     return null;
