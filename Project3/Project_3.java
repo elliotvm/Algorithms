@@ -14,7 +14,8 @@ public class Project_3 {
         int l = in.nextInt();
         
         Dominion galaxy[] = new Dominion()[n*m*k];
-        Vector monarchies = new Vector();
+        List monarchies = new List();
+        Stack allDominions = new Stack();
         
         for (int a = 0; a < l; a++) {
             int p = in.nextInt();
@@ -22,15 +23,23 @@ public class Project_3 {
             int d1 = in.nextInt();
             Dominion rep = new Dominion(d1);
             rep.setParent(rep);
-            galaxy[d1] = rep;
             monarchies.add(rep);
                         
             for (int b = 1; b < p; b++) {
                 int d = in.nextInt();
                 Dominion newDom = new Dominion(d);
                 newDom.setParent(rep);
-                galaxy[d] = newDom;
+                allDominions.push(newDom);
             }
+            
+            allDominions.push(rep);
+        }
+        
+        int numMonths = 0;
+        while (!allDominions.isEmpty()) {
+            // Insert dominion
+            // Evaluate dominion
+            // If next dominion is rep, evaluate connectedness
         }
         
     }
