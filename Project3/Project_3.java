@@ -1,23 +1,25 @@
-package elliot.project_3;
-
 import java.util.*;
 
 public class Project_3 {
 
+    //Adds a set to empire
     static void makeSet(Dominion x, List<Dominion> empire){
         empire.add(x);
         x.parent = x;
         x.rank = 0;
     }
     
-        
-    static Dominion findSet(Dominion x){//returns the representative dominion
+    //Finds which set a dominion is part of
+    //returns the representative dominion
+    static Dominion findSet(Dominion x){
         if(x != x.parent){
+            //set direct parent to representative
             x.parent = findSet(x.parent);
         }
         return x.parent;
     }
-    
+
+    //Merges two unions. Smaller rank union is merged to bigger rank.
     static void union(Dominion x, Dominion y, List<Dominion> empire){
         
         Dominion repX = findSet(x);
@@ -101,7 +103,6 @@ public class Project_3 {
         int l = in.nextInt();
         
         Dominion galaxy[] = new Dominion[n*m*k];
-        //List<Dominion> monarchies;
         Stack<Dominion> allDominions = new Stack<>();
         
         //keep track of inputted sized of monarchy
@@ -138,7 +139,8 @@ public class Project_3 {
                 }
 
             }
-            
+
+            //if empire is connected, there will only be one representative present in the empire list
             if(empire.size() != 1){
                 numDisconnectedMonths += 1;
             }
@@ -150,6 +152,3 @@ public class Project_3 {
         
     }
 }
-
-//Dominion: dominion parent, position, 
-//Monarchy: size, set[]
