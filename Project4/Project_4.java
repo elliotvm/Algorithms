@@ -18,34 +18,34 @@ public class Project_4 {
             
             vehicles.add(new Vehicle(type, color, orientation));
             
+           int coordY = Integer.parseInt(in.nextLine()) - 1;
             int coordX = Integer.parseInt(in.nextLine()) - 1;
-            int coordY = Integer.parseInt(in.nextLine()) - 1;
             
             if("truck".equals(type)){
                 if("h".equals(orientation)){
                     board[coordY][coordX] = i + 1;
-                    board[coordY + 1][coordX] = i + 1;
-                    board[coordY + 2][coordX] = i + 1;
-                }else if("v".equals(orientation)){
-                    board[coordY][coordX] = i + 1;
                     board[coordY][coordX + 1] = i + 1;
                     board[coordY][coordX + 2] = i + 1;
+                }else if("v".equals(orientation)){
+                    board[coordY][coordX] = i + 1;
+                    board[coordY + 1][coordX] = i + 1;
+                    board[coordY + 2][coordX] = i + 1;
                 }
             }
             else if("car".equals(type)){
                 if("h".equals(orientation)){
                     board[coordY][coordX] = i + 1;
-                    board[coordY + 1][coordX] = i + 1;
+                    board[coordY][coordX + 1] = i + 1;
                 }else if("v".equals(orientation)){
                     board[coordY][coordX] = i + 1;
-                    board[coordY][coordX + 1] = i + 1;
+                    board[coordY + 1][coordX] = i + 1;
                 }
             }
         }
         
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 6; j++){
-                System.out.print(board[j][i]);
+                System.out.print(board[i][j]);
             }
             System.out.print("\n");
         }
