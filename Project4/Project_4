@@ -2,22 +2,32 @@ package com.mycompany.project_4;
 
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.HashMap;
 
 public class Project_4 {
 
     public static void main(String[] args) {
-        char board[][] = new char[6][6];
-        Queue<char[][]> Q = new LinkedList<>();
+        int board[][] = new int[6][6];
+        Queue<int[][]> Q = new LinkedList<>();
+        HashMap<String, int[][]> HM = new HashMap<>();
         
         Q.add(board);
         while(!Q.isEmpty()) {
-            char[][] currBoard = Q.remove();
+            int[][] currBoard = Q.remove();
             // Get all legal moves. 
+            Queue<int[][]> adjBoards = getAdj();
             // Check if any of the moves solve the puzzle. 
-            // Generate strings from boards. 
-            // Put strings in hashmap if they aren't already there. 
-            // Enqueue all new positions. 
+            while (!adjBoards.isEmpty()) {
+                int[][] currAdj = adjBoards.remove();
+                // Generate strings from boards. 
+                String strAdj = boardToStr(currAdj);
+                // Put strings in hashmap if they aren't already there. 
+                if (!HM.containsKey(strAdj)) {
+                    HM.put(strAdj, currAdj);
+                    // Enqueue new position. 
+                    Q.add(currAdj);
+                }
+            }
         }
-        
     }
 }
