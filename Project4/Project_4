@@ -1,1 +1,23 @@
+package com.mycompany.project_4;
 
+import java.util.Queue;
+import java.util.LinkedList;
+
+public class Project_4 {
+
+    public static void main(String[] args) {
+        char board[][] = new char[6][6];
+        Queue<char[][]> Q = new LinkedList<>();
+        
+        Q.add(board);
+        while(!Q.isEmpty()) {
+            char[][] currBoard = Q.remove();
+            // Get all legal moves. 
+            // Check if any of the moves solve the puzzle. 
+            // Generate strings from boards. 
+            // Put strings in hashmap if they aren't already there. 
+            // Enqueue all new positions. 
+        }
+        
+    }
+}
