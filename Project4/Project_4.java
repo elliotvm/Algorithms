@@ -6,8 +6,7 @@ public class Project_4 {
         int board[][] = new int[6][6];
         Queue<int[][]> Q = new LinkedList<>();
         HashMap<String, int[][]> HM = new HashMap<>();
-
-                List<Vehicle> vehicles = new ArrayList<Vehicle>();
+        List<Vehicle> vehicles = new ArrayList<Vehicle>();
         
         Scanner in = new Scanner(System.in);
         int n = Integer.parseInt(in.nextLine());
@@ -50,12 +49,13 @@ public class Project_4 {
             }
             System.out.print("\n");
         }
-
+        
+        
         Q.add(board);
         while(!Q.isEmpty()) {
             int[][] currBoard = Q.remove();
             // Get all legal moves. 
-            Queue<int[][]> adjBoards = getAdj();
+            Queue<int[][]> adjBoards = getAdj(currBoard);
             // Check if any of the moves solve the puzzle. 
             while (!adjBoards.isEmpty()) {
                 int[][] currAdj = adjBoards.remove();
@@ -69,5 +69,22 @@ public class Project_4 {
                 }
             }
         }
+    }
+    
+    public static Queue<int[][]> getAdj(int[][] board) {
+        Queue<int[][]> adjBoards = new LinkedList<>();
+        
+        
+        return adjBoards;
+    }
+    
+    public static String boardToStr(int[][] board) {
+        String str = "";
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                str = str.concat("" + board[i][j]);
+            }
+        }
+        return str;
     }
 }
