@@ -55,10 +55,11 @@ public class Project_4 {
         while(!Q.isEmpty()) {
             int[][] currBoard = Q.remove();
             // Get all legal moves. 
-            Queue<int[][]> adjBoards = getAdj(currBoard);
-            // Check if any of the moves solve the puzzle. 
+            Queue<int[][]> adjBoards = getAdj(currBoard, vehicles);
             while (!adjBoards.isEmpty()) {
                 int[][] currAdj = adjBoards.remove();
+                // Check if this board solves the puzzle. 
+                
                 // Generate strings from boards. 
                 String strAdj = boardToStr(currAdj);
                 // Put strings in hashmap if they aren't already there. 
@@ -71,9 +72,11 @@ public class Project_4 {
         }
     }
     
-    public static Queue<int[][]> getAdj(int[][] board) {
+    public static Queue<int[][]> getAdj(int[][] board, List<Vehicle> vehicles) {
         Queue<int[][]> adjBoards = new LinkedList<>();
-        
+        for (int i = 0; i < vehicles.size(); i++) {
+            
+        }
         
         return adjBoards;
     }
