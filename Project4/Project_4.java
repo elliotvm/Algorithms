@@ -59,7 +59,10 @@ public class Project_4 {
             while (!adjBoards.isEmpty()) {
                 int[][] currAdj = adjBoards.remove();
                 // Check if this board solves the puzzle. 
-                
+                if(isWinner(currAdj)){
+                    //run Win subroutine
+                    System.out.println("winner");
+                }
                 // Generate strings from boards. 
                 String strAdj = boardToStr(currAdj);
                 // Put strings in hashmap if they aren't already there. 
@@ -70,6 +73,10 @@ public class Project_4 {
                 }
             }
         }
+    }
+
+    public static boolean isWinner(int[][] b){
+        return b[5][2] == 1;
     }
     
     public static Queue<int[][]> getAdj(int[][] board, List<Vehicle> vehicles) {
