@@ -87,7 +87,11 @@ public class Project_4 {
                 c++;
                 w = HM.get(boardToStr(w.board));
             }
-            System.out.println(c + " moves:");
+            if(c==1){
+                System.out.println(c + " move");
+            }else{
+                System.out.println(c + " moves");
+            }
             printWinner(winMove, HM, board);
         }
     }
