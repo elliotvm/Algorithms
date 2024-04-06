@@ -76,7 +76,7 @@ public class Project_4 {
     }
 
     public static boolean isWinner(int[][] b){
-        return b[5][2] == 1;
+        return b[2][5] == 1;
     }
     
     public static Queue<int[][]> getAdj(int[][] board, List<Vehicle> vehicles) {
