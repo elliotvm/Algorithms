@@ -74,8 +74,85 @@ public class Project_4 {
     
     public static Queue<int[][]> getAdj(int[][] board, List<Vehicle> vehicles) {
         Queue<int[][]> adjBoards = new LinkedList<>();
-        for (int i = 0; i < vehicles.size(); i++) {
-            
+        for (int v = 1; v <= vehicles.size(); v++) {
+            Vehicle currV = vehicles.get(v - 1);
+            int x = -1;
+            int y = -1;
+            for (int j = 0; j < board.length; j++) {
+                for (int i = 0; i < board.length; i++) {
+                    if (x == -1 && board[j][i] == v) {
+                        x = i;
+                        y = j;
+                    }
+                }
+            }
+            if (currV.orientation.equals("h")) {
+                if (currV.type.equals("car")) {
+                    // Move car left.
+                    for (int n = 1; x - n >= 0 && board[y][x-n] == 0; n++) {
+                        int[][] newBoard = board.clone();
+                        newBoard[y][x-n] = v;
+                        newBoard[y][x-n+2] = 0;
+                        adjBoards.add(newBoard);
+                    }
+                    // Move car right.
+                    for (int n = 1; x + 2 + n < 6 && board[y][x+2+n] == 0; n++) {
+                        int[][] newBoard = board.clone();
+                        newBoard[y][x+2+n] = v;
+                        newBoard[y][x+n] = 0;
+                        adjBoards.add(newBoard);
+                    }
+                }
+                else if (currV.type.equals("truck")) {
+                    // Move truck left.
+                    for (int n = 1; x - n >= 0 && board[y][x-n] == 0; n++) {
+                        int[][] newBoard = board.clone();
+                        newBoard[y][x-n] = v;
+                        newBoard[y][x-n+3] = 0;
+                        adjBoards.add(newBoard);
+                    }
+                    // Move truck right.
+                    for (int n = 1; x + 3 + n < 6 && board[y][x+3+n] == 0; n++) {
+                        int[][] newBoard = board.clone();
+                        newBoard[y][x+3+n] = v;
+                        newBoard[y][x+n] = 0;
+                        adjBoards.add(newBoard);
+                    }
+                }
+            }
+            if (currV.orientation.equals("v")) {
+                if (currV.type.equals("car")) {
+                    // Move car up.
+                    for (int n = 1; y - n >= 0 && board[y - n][x] == 0; n++) {
+                        int[][] newBoard = board.clone();
+                        newBoard[y - n][x] = v;
+                        newBoard[y - n + 2][x] = 0;
+                        adjBoards.add(newBoard);
+                    }
+                    // Move car down.
+                    for (int n = 1; y + 2 + n < 6 && board[y + 2 + n][x] == 0; n++) {
+                        int[][] newBoard = board.clone();
+                        newBoard[y + 2 + n][x] = v;
+                        newBoard[y + n][x] = 0;
+                        adjBoards.add(newBoard);
+                    }
+                } else if (currV.type.equals("truck")) {
+                    // Move truck up.
+                    for (int n = 1; y - n >= 0 && board[y - n][x] == 0; n++) {
+                        int[][] newBoard = board.clone();
+                        newBoard[y - n][x] = v;
+                        newBoard[y - n + 3][x] = 0;
+                        adjBoards.add(newBoard);
+                    }
+                    // Move truck down.
+                    for (int n = 1; y + 3 + n < 6 && board[y + 3 + n][x] == 0; n++) {
+                        int[][] newBoard = board.clone();
+                        newBoard[y + 3 + n][x] = v;
+                        newBoard[y + n][x] = 0;
+                        adjBoards.add(newBoard);
+                    }
+                }
+            }
         }
         
         return adjBoards;
