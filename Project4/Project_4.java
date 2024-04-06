@@ -1,3 +1,5 @@
+package elliot.project_4;
+
 import java.util.*;
 
 public class Project_4 {
@@ -103,9 +105,9 @@ public class Project_4 {
                         adjBoards.add(newBoard);
                     }
                     // Move car right.
-                    for (int n = 1; x + 2 + n < 6 && board[y][x+2+n] == 0; n++) {
+                    for (int n = 1; x + 1 + n < 6 && board[y][x+1+n] == 0; n++) {
                         int[][] newBoard = board.clone();
-                        newBoard[y][x+2+n] = v;
+                        newBoard[y][x+1+n] = v;
                         newBoard[y][x+n] = 0;
                         adjBoards.add(newBoard);
                     }
@@ -119,9 +121,9 @@ public class Project_4 {
                         adjBoards.add(newBoard);
                     }
                     // Move truck right.
-                    for (int n = 1; x + 3 + n < 6 && board[y][x+3+n] == 0; n++) {
+                    for (int n = 1; x + 2 + n < 6 && board[y][x+2+n] == 0; n++) {
                         int[][] newBoard = board.clone();
-                        newBoard[y][x+3+n] = v;
+                        newBoard[y][x+2+n] = v;
                         newBoard[y][x+n] = 0;
                         adjBoards.add(newBoard);
                     }
@@ -133,13 +135,13 @@ public class Project_4 {
                     for (int n = 1; y - n >= 0 && board[y - n][x] == 0; n++) {
                         int[][] newBoard = board.clone();
                         newBoard[y - n][x] = v;
-                        newBoard[y - n + 2][x] = 0;
+                        newBoard[y - n + 1][x] = 0;
                         adjBoards.add(newBoard);
                     }
                     // Move car down.
-                    for (int n = 1; y + 2 + n < 6 && board[y + 2 + n][x] == 0; n++) {
+                    for (int n = 1; y + 1 + n < 6 && board[y + 1 + n][x] == 0; n++) {
                         int[][] newBoard = board.clone();
-                        newBoard[y + 2 + n][x] = v;
+                        newBoard[y + 1 + n][x] = v;
                         newBoard[y + n][x] = 0;
                         adjBoards.add(newBoard);
                     }
@@ -148,13 +150,13 @@ public class Project_4 {
                     for (int n = 1; y - n >= 0 && board[y - n][x] == 0; n++) {
                         int[][] newBoard = board.clone();
                         newBoard[y - n][x] = v;
-                        newBoard[y - n + 3][x] = 0;
+                        newBoard[y - n + 2][x] = 0;
                         adjBoards.add(newBoard);
                     }
                     // Move truck down.
-                    for (int n = 1; y + 3 + n < 6 && board[y + 3 + n][x] == 0; n++) {
+                    for (int n = 1; y + 2 + n < 6 && board[y + 2 + n][x] == 0; n++) {
                         int[][] newBoard = board.clone();
-                        newBoard[y + 3 + n][x] = v;
+                        newBoard[y + 2 + n][x] = v;
                         newBoard[y + n][x] = 0;
                         adjBoards.add(newBoard);
                     }
