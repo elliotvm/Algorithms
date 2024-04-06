@@ -18,7 +18,7 @@ public class Project_4 {
             
             vehicles.add(new Vehicle(type, color, orientation));
             
-           int coordY = Integer.parseInt(in.nextLine()) - 1;
+            int coordY = Integer.parseInt(in.nextLine()) - 1;
             int coordX = Integer.parseInt(in.nextLine()) - 1;
             
             if("truck".equals(type)){
@@ -50,27 +50,36 @@ public class Project_4 {
             System.out.print("\n");
         }
         
-        
+        boolean winnerFound = false;
+        int[][] winBoard = new int[6][6];
         Q.add(board);
-        while(!Q.isEmpty()) {
+        while(!Q.isEmpty() && !winnerFound) {
             int[][] currBoard = Q.remove();
             // Get all legal moves. 
             Queue<int[][]> adjBoards = getAdj(currBoard, vehicles);
-            while (!adjBoards.isEmpty()) {
+            while (!adjBoards.isEmpty() && !winnerFound) {
                 int[][] currAdj = adjBoards.remove();
-                // Check if this board solves the puzzle. 
+                // Check if this board solves the puzzle. ** Outdated **
                 if(isWinner(currAdj)){
                     //run Win subroutine
                     System.out.println("winner");
+                    winnerFound = true;
+                    winBoard = currAdj;
                 }
                 // Generate strings from boards. 
                 String strAdj = boardToStr(currAdj);
                 // Put strings in hashmap if they aren't already there. 
                 if (!HM.containsKey(strAdj)) {
-                    HM.put(strAdj, currAdj);
+                    HM.put(strAdj, currBoard);
                     // Enqueue new position. 
                     Q.add(currAdj);
                 }
+            }
+        }
+        
+        if (winnerFound) {
+            while (winBoard != board) {
+                HM.get(boardToStr(winBoard));
             }
         }
     }
@@ -97,7 +106,7 @@ public class Project_4 {
                 if (currV.type.equals("car")) {
                     // Move car left.
                     for (int n = 1; x - n >= 0 && board[y][x-n] == 0; n++) {
-                        int[][] newBoard = board.clone();
+                        int[][] newBoard = cloneBoard(board);
                         newBoard[y][x] = 0;
                         newBoard[y][x+1] = 0;
                         newBoard[y][x-n] = v;
@@ -107,7 +116,7 @@ public class Project_4 {
                     }
                     // Move car right.
                     for (int n = 1; x + 1 + n < 6 && board[y][x+1+n] == 0; n++) {
-                        int[][] newBoard = board.clone();
+                        int[][] newBoard = cloneBoard(board);
                         newBoard[y][x] = 0;
                         newBoard[y][x+1] = 0;
                         newBoard[y][x+n] = v;
@@ -118,7 +127,7 @@ public class Project_4 {
                 else if (currV.type.equals("truck")) {
                     // Move truck left.
                     for (int n = 1; x - n >= 0 && board[y][x-n] == 0; n++) {
-                        int[][] newBoard = board.clone();
+                        int[][] newBoard = cloneBoard(board);
                         newBoard[y][x] = 0;
                         newBoard[y][x+1] = 0;
                         newBoard[y][x+2] = 0;
@@ -129,7 +138,7 @@ public class Project_4 {
                     }
                     // Move truck right.
                     for (int n = 1; x + 2 + n < 6 && board[y][x+2+n] == 0; n++) {
-                        int[][] newBoard = board.clone();
+                        int[][] newBoard = cloneBoard(board);
                         newBoard[y][x] = 0;
                         newBoard[y][x+1] = 0;
                         newBoard[y][x+2] = 0;
@@ -144,7 +153,7 @@ public class Project_4 {
                 if (currV.type.equals("car")) {
                     // Move car up.
                     for (int n = 1; y - n >= 0 && board[y - n][x] == 0; n++) {
-                        int[][] newBoard = board.clone();
+                        int[][] newBoard = cloneBoard(board);
                         newBoard[y][x] = 0;
                         newBoard[y+1][x] = 0;
                         newBoard[y-n][x] = v;
@@ -153,7 +162,7 @@ public class Project_4 {
                     }
                     // Move car down.
                     for (int n = 1; y + 1 + n < 6 && board[y + 1 + n][x] == 0; n++) {
-                        int[][] newBoard = board.clone();
+                        int[][] newBoard = cloneBoard(board);
                         newBoard[y][x] = 0;
                         newBoard[y+1][x] = 0;
                         newBoard[y+n][x] = v;
@@ -163,7 +172,7 @@ public class Project_4 {
                 } else if (currV.type.equals("truck")) {
                     // Move truck up.
                     for (int n = 1; y - n >= 0 && board[y - n][x] == 0; n++) {
-                        int[][] newBoard = board.clone();
+                        int[][] newBoard = cloneBoard(board);
                         newBoard[y][x] = 0;
                         newBoard[y+1][x] = 0;
                         newBoard[y+2][x] = 0;
@@ -174,7 +183,7 @@ public class Project_4 {
                     }
                     // Move truck down.
                     for (int n = 1; y + 2 + n < 6 && board[y + 2 + n][x] == 0; n++) {
-                        int[][] newBoard = board.clone();
+                        int[][] newBoard = cloneBoard(board);
                         newBoard[y][x] = 0;
                         newBoard[y+1][x] = 0;
                         newBoard[y+2][x] = 0;
@@ -188,6 +197,16 @@ public class Project_4 {
         }
         
         return adjBoards;
+    }
+    
+    public static int[][] cloneBoard(int[][] board) {
+        int[][] newBoard = new int[board.length][board.length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                newBoard[j][i] = board[j][i];
+            }
+        }
+        return newBoard;
     }
     
     public static String boardToStr(int[][] board) {
