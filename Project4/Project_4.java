@@ -1,5 +1,3 @@
-package elliot.project_4;
-
 import java.util.*;
 
 public class Project_4 {
