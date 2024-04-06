@@ -1,11 +1,13 @@
+package elliot.project_4;
+
 import java.util.*;
 
 public class Project_4 {
 
     public static void main(String[] args) {
         int board[][] = new int[6][6];
-        Queue<int[][]> Q = new LinkedList<>();
-        HashMap<String, int[][]> HM = new HashMap<>();
+        Queue<Move> Q = new LinkedList<>();
+        HashMap<String, Move> HM = new HashMap<>();
         List<Vehicle> vehicles = new ArrayList<Vehicle>();
         
         Scanner in = new Scanner(System.in);
@@ -51,26 +53,27 @@ public class Project_4 {
         }
         
         boolean winnerFound = false;
-        int[][] winBoard = new int[6][6];
-        Q.add(board);
+        Move winMove = null;
+        Q.add(new Move(board));
         while(!Q.isEmpty() && !winnerFound) {
-            int[][] currBoard = Q.remove();
+            //int[][] currBoard = Q.remove();
+            Move currMove = Q.remove();
             // Get all legal moves. 
-            Queue<int[][]> adjBoards = getAdj(currBoard, vehicles);
+            Queue<Move> adjBoards = getAdj(currMove.board, vehicles);
             while (!adjBoards.isEmpty() && !winnerFound) {
-                int[][] currAdj = adjBoards.remove();
+                Move currAdj = adjBoards.remove();
                 // Check if this board solves the puzzle. ** Outdated **
-                if(isWinner(currAdj)){
+                if(isWinner(currAdj.board)){
                     //run Win subroutine
                     System.out.println("winner");
                     winnerFound = true;
-                    winBoard = currAdj;
+                    winMove = currAdj;
                 }
                 // Generate strings from boards. 
-                String strAdj = boardToStr(currAdj);
+                String strAdj = boardToStr(currAdj.board);
                 // Put strings in hashmap if they aren't already there. 
                 if (!HM.containsKey(strAdj)) {
-                    HM.put(strAdj, currBoard);
+                    HM.put(strAdj, currMove);
                     // Enqueue new position. 
                     Q.add(currAdj);
                 }
@@ -78,18 +81,30 @@ public class Project_4 {
         }
         
         if (winnerFound) {
-            while (winBoard != board) {
-                HM.get(boardToStr(winBoard));
+            Move w = winMove;
+            int c = 0; 
+            while(w.board != board){
+                c++;
+                w = HM.get(boardToStr(w.board));
             }
+            System.out.println(c + " moves:");
+            printWinner(winMove, HM, board);
         }
     }
 
+    public static void printWinner(Move winMove, HashMap<String, Move> HM, int[][] board){
+        if(winMove.board != board){
+            printWinner(HM.get(boardToStr(winMove.board)), HM, board);
+            System.out.println(winMove.move);
+        }
+    }
+    
     public static boolean isWinner(int[][] b){
         return b[2][5] == 1;
     }
     
-    public static Queue<int[][]> getAdj(int[][] board, List<Vehicle> vehicles) {
-        Queue<int[][]> adjBoards = new LinkedList<>();
+    public static Queue<Move> getAdj(int[][] board, List<Vehicle> vehicles) {
+        Queue<Move> adjBoards = new LinkedList<>();
         for (int v = 1; v <= vehicles.size(); v++) {
             Vehicle currV = vehicles.get(v - 1);
             int x = -1;
@@ -111,7 +126,8 @@ public class Project_4 {
                         newBoard[y][x+1] = 0;
                         newBoard[y][x-n] = v;
                         newBoard[y][x-n+1] = v;
-                        adjBoards.add(newBoard);
+                  
+                        adjBoards.add(new Move(newBoard, currV.color, n, 'L'));
                   
                     }
                     // Move car right.
@@ -121,7 +137,7 @@ public class Project_4 {
                         newBoard[y][x+1] = 0;
                         newBoard[y][x+n] = v;
                         newBoard[y][x+n+1] = v;
-                        adjBoards.add(newBoard);
+                        adjBoards.add(new Move(newBoard, currV.color, n, 'R'));
                     }
                 }
                 else if (currV.type.equals("truck")) {
@@ -134,7 +150,7 @@ public class Project_4 {
                         newBoard[y][x-n] = v;
                         newBoard[y][x-n+1] = v;
                         newBoard[y][x-n+2] = v;
-                        adjBoards.add(newBoard);
+                        adjBoards.add(new Move(newBoard, currV.color, n, 'L'));
                     }
                     // Move truck right.
                     for (int n = 1; x + 2 + n < 6 && board[y][x+2+n] == 0; n++) {
@@ -145,7 +161,7 @@ public class Project_4 {
                         newBoard[y][x+n] = v;
                         newBoard[y][x+n+1] = v;
                         newBoard[y][x+n+2] = v;
-                        adjBoards.add(newBoard);
+                        adjBoards.add(new Move(newBoard, currV.color, n, 'R'));
                     }
                 }
             }
@@ -158,7 +174,7 @@ public class Project_4 {
                         newBoard[y+1][x] = 0;
                         newBoard[y-n][x] = v;
                         newBoard[y-n+1][x] = v;
-                        adjBoards.add(newBoard);
+                        adjBoards.add(new Move(newBoard, currV.color, n, 'U'));
                     }
                     // Move car down.
                     for (int n = 1; y + 1 + n < 6 && board[y + 1 + n][x] == 0; n++) {
@@ -167,7 +183,7 @@ public class Project_4 {
                         newBoard[y+1][x] = 0;
                         newBoard[y+n][x] = v;
                         newBoard[y+n+1][x] = v;
-                        adjBoards.add(newBoard);
+                        adjBoards.add(new Move(newBoard, currV.color, n, 'D'));
                     }
                 } else if (currV.type.equals("truck")) {
                     // Move truck up.
@@ -179,7 +195,7 @@ public class Project_4 {
                         newBoard[y-n][x] = v;
                         newBoard[y-n+1][x] = v;
                         newBoard[y-n+2][x] = v;
-                        adjBoards.add(newBoard);
+                        adjBoards.add(new Move(newBoard, currV.color, n, 'U'));
                     }
                     // Move truck down.
                     for (int n = 1; y + 2 + n < 6 && board[y + 2 + n][x] == 0; n++) {
@@ -190,7 +206,7 @@ public class Project_4 {
                         newBoard[y+n][x] = v;
                         newBoard[y+n+1][x] = v;
                         newBoard[y+n+2][x] = v;
-                        adjBoards.add(newBoard);
+                        adjBoards.add(new Move(newBoard, currV.color, n, 'D'));
                     }
                 }
             }
