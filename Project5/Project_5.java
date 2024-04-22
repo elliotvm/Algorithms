@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Project_5 {
 
-    static final int INF = 1000;
+    static final double INF = 1000;
     
     public static void setIntersection(int x, int y, double d, double[][] matrix){
         matrix[x][y] = d;
@@ -36,6 +36,7 @@ public class Project_5 {
             setIntersection(x, y, d, matrix);
         }
         
+        /*
         //print matrix for debugging:
         for(int i = 0; i < num_intersections; i++){
 
@@ -44,7 +45,7 @@ public class Project_5 {
             }
             System.out.print("\n");
         }
-        
+        */
         for(int i = 0; i < num_cities; i++){
             int num = in.nextInt();
             String name = in.next();
@@ -62,7 +63,7 @@ public class Project_5 {
             signs.add(sign);
         }
         
-                
+           /*    
         //print cities for debugging
         for(City c : cities){
             System.out.println(c.getName() + " " + c.getIntersection());
@@ -72,7 +73,7 @@ public class Project_5 {
         for(Sign s : signs){
             System.out.println(s.start + " " + s.end + " " + s.distance);
         }
-
+        */
         int n = matrix.length;
 
         double[][] best = matrix;
@@ -112,10 +113,11 @@ public class Project_5 {
                         roadUsed = true;
                     }
                 }
-                if (roadUsed) {
+                if (roadUsed && s.start != c.intersection) {
                     s.addCity(c);
                 }
             }
+            
             
             for (City c : s.cities) {
                 int distance = (int) Math.round(matrix[s.start][c.intersection] - s.distance);
@@ -126,6 +128,7 @@ public class Project_5 {
                 System.out.println(map.get(key) + " " + key);
             }
             
+            System.out.println();
         }
         
     }
