@@ -2,8 +2,6 @@ import java.util.*;
 
 public class Project_5 {
 
-    static final int INF = 1000;
-    
     public static void setIntersection(int x, int y, double d, double[][] matrix){
         matrix[x][y] = d;
         matrix[y][x] = d;
@@ -21,13 +19,6 @@ public class Project_5 {
         in.nextLine();
         //set matrix of intersections
         double matrix[][] = new double[num_intersections][num_intersections];
-
-        //initialize matrix to all infinity
-        for(int i = 0; i < num_intersections; i++){
-            for(int j = 0; j < num_intersections; i++){
-                matrix[i][j] = INF;
-            }
-        }
         
         //set roads between intersections
         for(int i = 0; i < num_roads; i++){
@@ -96,7 +87,38 @@ public class Project_5 {
             }
         }
         
-        
+       
+        int predecessor;
+        for (Sign s : signs) {
+            SortedMap<Integer, String> map = new TreeMap<>();
+            for (City c : cities) {
+                boolean done = false;
+                boolean roadUsed = false;
+                predecessor = c.intersection;
+                while (!done) {
+                    predecessor = pred[s.start][predecessor];
+                    if (predecessor == s.start) {
+                        done = true;
+                    }
+                    if (predecessor == s.end) {
+                        roadUsed = true;
+                    }
+                }
+                if (roadUsed) {
+                    s.addCity(c);
+                }
+            }
+            
+            for (City c : s.cities) {
+                int distance = (int) Math.round(matrix[s.start][c.intersection] - s.distance);
+                map.put(distance, c.name);
+            }
+            
+            for (Integer key : map.keySet()) {
+                System.out.println(map.get(key) + " " + key);
+            }
+            
+        }
         
     }
 }
