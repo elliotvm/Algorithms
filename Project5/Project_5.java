@@ -24,7 +24,7 @@ public class Project_5 {
         
         //initialize matrix to all infinity
         for(int i = 0; i < num_intersections; i++){
-            for(int j = 0; j < num_intersections; i++){
+            for(int j = 0; j < num_intersections; j++){
                 matrix[i][j] = INF;
             }
         }
