@@ -64,6 +64,30 @@ public class Project_5 {
         for(Sign s : signs){
             System.out.println(s.start + " " + s.end + " " + s.distance);
         }
+
+        int n = matrix.length;
+
+        double[][] best = matrix;
+        int pred[][] = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                pred[i][j] = i;
+            }
+        }
+        
+        // Floyd-Warshall Algorithm
+        for (int k = 0; k < n; k++) {
+            for (int u = 0; u < n; u++) {
+                for (int v = 0; v < n; v++) {
+                    if ((best[u][k] + best[k][v]) < best[u][v]) {
+                        best[u][v] = best[u][k] + best[k][v];
+                        pred[u][v] = pred[k][v];
+                    }
+                }
+            }
+        }
+        
+        
         
     }
 }
