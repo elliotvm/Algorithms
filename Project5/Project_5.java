@@ -28,6 +28,7 @@ public class Project_5 {
                 matrix[i][j] = INF;
             }
         }
+        
         //set roads between intersections
         for(int i = 0; i < num_roads; i++){
             int x = in.nextInt();
@@ -35,17 +36,8 @@ public class Project_5 {
             double d = in.nextDouble();
             setIntersection(x, y, d, matrix);
         }
-        
-        /*
-        //print matrix for debugging:
-        for(int i = 0; i < num_intersections; i++){
 
-            for(int j = 0; j < num_intersections; j++){
-                System.out.print(matrix[i][j] + "\t");
-            }
-            System.out.print("\n");
-        }
-        */
+        //Create cities
         for(int i = 0; i < num_cities; i++){
             int num = in.nextInt();
             String name = in.next();
@@ -54,7 +46,8 @@ public class Project_5 {
         }
         
         int num_signs = in.nextInt();
-        
+
+        //Create signs
         for(int i = 0; i < num_signs; i++){
             int s = in.nextInt();
             int e = in.nextInt();
@@ -62,18 +55,7 @@ public class Project_5 {
             Sign sign = new Sign(s, e, d);
             signs.add(sign);
         }
-        
-           /*    
-        //print cities for debugging
-        for(City c : cities){
-            System.out.println(c.getName() + " " + c.getIntersection());
-        }
-        
-        //print out signs for debugging
-        for(Sign s : signs){
-            System.out.println(s.start + " " + s.end + " " + s.distance);
-        }
-        */
+
         int n = matrix.length;
 
         double[][] best = matrix;
@@ -95,11 +77,11 @@ public class Project_5 {
                 }
             }
         }
-        
        
         int predecessor;
         for (Sign s : signs) {
             SortedMap<Integer, String> map = new TreeMap<>();
+            //iterate through every city, figure out if sign is on best path from starting intersection to city 
             for (City c : cities) {
                 boolean done = false;
                 boolean roadUsed = false;
@@ -118,12 +100,13 @@ public class Project_5 {
                 }
             }
             
-            
+            //Store rounded distance to each city into a sorted map
             for (City c : s.cities) {
                 int distance = (int) Math.round(matrix[s.start][c.intersection] - s.distance);
                 map.put(distance, c.name);
             }
-            
+
+            //Print out cities from sorted map
             for (Integer key : map.keySet()) {
                 System.out.println(map.get(key) + " " + key);
             }
